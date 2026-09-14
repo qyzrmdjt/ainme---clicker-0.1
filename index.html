@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <link rel="icon" type="image/png" href="icon.png">
+
+  <title>Anime Tap Clicker</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+
+
+  <!-- Фон -->
+  <div id="characterBg"></div>
+  <div class="overlay"></div>
+
+  <!-- ===== ГЛАВНЫЙ ЭКРАН ===== -->
+  <div id="homeScreen">
+
+    <div class="next-char" id="nextCharInfo">
+      <div class="next-char-label">Следующий персонаж</div>
+      <div class="next-char-name" id="nextCharName">—</div>
+      <div class="next-char-cost" id="nextCharCost">—</div>
+    </div>
+
+    <header class="top-bar">
+      <div class="hero-left">
+        <div class="rank-badge" id="heroRank">D</div>
+        <div class="hero-text">
+          <div class="hero-name" id="heroName">Mia</div>
+          <div class="hero-prestige">prestige</div>
+        </div>
+      </div>
+      <div class="stars" id="heroStars">★☆☆☆</div>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card dpc">
+        <div class="stat-label">DPC</div>
+        <div class="stat-value" id="power">1</div>
+        <div class="stat-change">+0%</div>
+      </div>
+      <div class="stat-card auto">
+        <div class="stat-label">AUTO</div>
+        <div class="stat-value" id="auto">0</div>
+        <div class="stat-sub">/sec</div>
+      </div>
+    </div>
+
+    <div class="tap-area">
+      <button id="tapBtn" class="tap-button">
+        <span class="tap-text">TAP</span>
+        <span class="tap-sub">to click</span>
+        <div class="tap-glow"></div>
+      </button>
+      <div class="currency">
+        <span class="diamond">◆</span>
+        <span id="score">0</span>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+
+    <button class="action-btn reroll" id="muteBtn" onclick="toggleMute()">
+      <div class="btn-icon">🔊</div>
+      <div class="btn-title">MUSIC</div>
+      <div class="btn-desc">Sound on/off</div>
+    </button> 
+
+
+      <button class="action-btn upgrade" id="upgradeBtn">
+        <div class="btn-icon">↑</div>
+        <div class="btn-title">UPGRADE</div>
+        <div class="btn-desc">Increase DPC</div>
+        <div class="btn-cost" id="upgradeCost">10</div>
+      </button>
+      <button class="action-btn auto-btn" id="autoBtn">
+        <div class="btn-icon">🤖</div>
+        <div class="btn-title">AUTO-CLICKER</div>
+        <div class="btn-desc">Generate clicks</div>
+        <div class="btn-cost" id="autoCost">50</div>
+      </button>
+      <button class="action-btn reroll" id="rerollBtn" onclick="rerollCharacter()">
+        <div class="btn-icon">🎲</div>
+        <div class="btn-title">REROLL</div>
+        <div class="btn-desc">New character</div>
+        <div class="btn-cost free">Free</div>
+      </button>
+    </div>
+
+  </div>
+  <!-- конец homeScreen -->
+
+
+  <!-- ===== ЭКРАН СТАТИСТИКИ ===== -->
+  <div id="statsScreen" class="screen hidden">
+    <div class="stats-header">
+      <h2>Leaderboard</h2>
+      <p>Топ игроков</p>
+    </div>
+
+    <div class="podium" id="top3Bar"></div>
+
+    <div class="my-rank">
+      <div class="my-rank-label">Твоя позиция</div>
+      <div class="my-rank-value" id="myRank">#—</div>
+      <div class="my-rank-score" id="myScore">0</div>
+    </div>
+
+    <div class="leaderboard" id="leaderboardList"></div>
+  </div>
+
+
+  <!-- ===== ЭКРАН МАГАЗИНА ===== -->
+  <div id="shopScreen" class="screen hidden">
+    <div class="stats-header">
+      <h2>Shop</h2>
+      <p>Улучшения</p>
+    </div>
+
+    <div class="shop-balance">
+      <span class="diamond">◆</span>
+      <span id="shopCoins">0</span>
+    </div>
+
+    <div class="shop-list" id="shopList"></div>
+  </div>
+
+
+  <!-- ===== ЭКРАН МЕНЮ (коллекция) ===== -->
+  <div id="menuScreen" class="screen hidden">
+    <div class="stats-header">
+      <h2>Characters</h2>
+      <p>Коллекция персонажей</p>
+    </div>
+
+  <div class="chars-grid" id="charsGrid">
+  <!-- карточки через JS -->
+    </div>
+  </div>
+
+
+
+
+  <!-- ===== НИЖНЯЯ НАВИГАЦИЯ ===== -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-screen="home">
+      <span>🏠</span>
+      <span>HOME</span>
+    </button>
+    <button class="nav-item" data-screen="stats">
+      <span>📊</span>
+      <span>STATS</span>
+    </button>
+    <button class="nav-item" data-screen="shop">
+      <span>🛒</span>
+      <span>SHOP</span>
+    </button>
+    <button class="nav-item" data-screen="menu">
+      <span>☰</span>
+      <span>MENU</span>
+    </button>
+  </nav>
+  <!-- Музыка из пакета Open Lo-Fi -->
+  <audio id="bgm" loop preload="auto"></audio>
+
+
+
+
+  <script src="js/characters.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/shop.js"></script>
+
+  <!-- Модалка персонажа -->
+<div id="charModal" class="char-modal hidden">
+  <div class="char-modal-content">
+    <button class="char-modal-close" id="charModalClose">×</button>
+    <img id="charModalImg" src="" alt="" style="display:none;">
+    <div class="char-modal-name" id="charModalName">—</div>
+    <div class="char-modal-rank" id="charModalRank">—</div>
+    <div class="char-modal-lore" id="charModalLore">—</div>
+  </div>
+</div>
+
+</body>
+</html>
